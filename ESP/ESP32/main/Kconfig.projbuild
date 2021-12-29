@@ -1,0 +1,42 @@
+menu "Configuration"
+
+    config ESP_WIFI_SSID
+        string "WiFi SSID"
+        default "myssid"
+        help
+            SSID (network name) for the example to connect to.
+
+    config ESP_WIFI_PASS
+        string "WiFi Password"
+        default "mypassword"
+        help
+            WiFi password (WPA or WPA2) for the example to use.
+
+    config ESP_MAXIMUM_RETRY
+        int "Maximum retry"
+        default 5
+        help
+            Set the Maximum retry to avoid station reconnecting to the AP unlimited when the AP is really inexistent.
+    config MQTT_HOST_IP
+        string "MQTT address"
+        default "192.168.0.11"
+        help
+            IP of mqtt broker.
+        
+    config MQTT_USERNAME
+        string "Username for MQTT broker"     
+        default "mqtt"
+        help
+            Username for mqtt broker.
+    config MQTT_CLIENT_ID
+        string "MQTT client id"
+        default "esp32"
+        help
+            client id for mqtt broker.
+    config MQTT_PASSWORD
+        string "Password for MQTT"
+        default "password"
+        help
+            password for MQTT broker.   
+                    
+endmenu
