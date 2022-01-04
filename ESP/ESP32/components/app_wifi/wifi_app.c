@@ -16,17 +16,19 @@
 #include "freertos/event_groups.h"
 #include <string.h>
 #include "sdkconfig.h"
-
-#define WIFI_SSID CONFIG_ESP_WIFI_SSID
-#define WIFI_PASS CONFIG_ESP_WIFI_PASSWORD
 #define MAXIMUM_RETRY 5
 #define WIFI_CONNECTED_BIT BIT0
 #define WIFI_FAIL_BIT BIT1
 
 static const char *TAG = "WIFI_APP";
 static EventGroupHandle_t s_wifi_event_group;
-
 static int s_retry_num = 0;
+
+wifi_status_t wifi_status = DISCONNECTED;
+
+wifi_status_t wifi_get_status(void){
+  return wifi_status;
+}
 
 static void event_handler(void *arg, esp_event_base_t event_base,
                           int32_t event_id, void *event_data) {
@@ -42,6 +44,7 @@ static void event_handler(void *arg, esp_event_base_t event_base,
       xEventGroupSetBits(s_wifi_event_group, WIFI_FAIL_BIT);
     }
     ESP_LOGI(TAG, "connect to the AP fail");
+    wifi_status = DISCONNECTED;
   } else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
     ip_event_got_ip_t *event = (ip_event_got_ip_t *)event_data;
     ESP_LOGI(TAG, "got ip:" IPSTR, IP2STR(&event->ip_info.ip));
@@ -90,11 +93,14 @@ void wifi_init(void) {
 
   if (bits & WIFI_CONNECTED_BIT) {
     ESP_LOGI(TAG, "connected to ap SSID:%s password:%s", WIFI_SSID, WIFI_PASS);
+    wifi_status = CONNECTED;
   } else if (bits & WIFI_FAIL_BIT) {
     ESP_LOGI(TAG, "Failed to connect to SSID:%s, password:%s", WIFI_SSID,
              WIFI_PASS);
+    wifi_status = DISCONNECTED;
   } else {
     ESP_LOGE(TAG, "UNEXPECTED EVENT");
+    wifi_status = DISCONNECTED;
   }
 
   ESP_ERROR_CHECK(esp_event_handler_instance_unregister(

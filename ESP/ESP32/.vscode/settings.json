@@ -4,6 +4,7 @@
   "idf.portWin": "COM3",
   "idf.adapterTargetName": "esp32",
   "files.associations": {
-    "esp_event.h": "c"
+    "esp_event.h": "c",
+    "*.inc": "c"
   }
 }

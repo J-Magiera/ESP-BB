@@ -11,6 +11,13 @@
 #ifndef WIFI_APP_H_
 #define WIFI_APP_H_
 
+
+typedef enum{
+    DISCONNECTED,
+    CONNECTED
+}wifi_status_t;
+
+wifi_status_t wifi_get_status(void);
 void wifi_init(void);
 
 #endif

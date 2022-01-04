@@ -21,6 +21,7 @@
 #define PASSWORD MQTT_PASSWORD
 
 static const char *TAG = "MQTT_EXAMPLE";
+static esp_mqtt_client_handle_t client = NULL;
 
 static void log_error_if_nonzero(const char *message, int error_code) {
   if (error_code != 0) {
@@ -33,7 +34,7 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base,
   ESP_LOGD(TAG, "Event dispatched from event loop base=%s, event_id=%d", base,
            event_id);
   esp_mqtt_event_handle_t event = event_data;
-  esp_mqtt_client_handle_t client = event->client;
+  client = event->client;
   int msg_id;
 
   switch ((esp_mqtt_event_id_t)event_id) {
@@ -90,7 +91,7 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base,
   }
 }
 
-void mqtt_app_start(void) {
+void app_mqtt_start(void) {
   const esp_mqtt_client_config_t mqtt_cfg = {.host = "192.168.0.10",
                                              .port = 1883,
                                              .client_id = "Esp32",
@@ -98,8 +99,24 @@ void mqtt_app_start(void) {
                                              .password = "password",
                                              .disable_clean_session = false};
 
-  esp_mqtt_client_handle_t client = esp_mqtt_client_init(&mqtt_cfg);
+  client = esp_mqtt_client_init(&mqtt_cfg);
+  if (client == NULL)
+	{
+		ESP_LOGI(TAG, "fail");
+	}
   esp_mqtt_client_register_event(client, ESP_EVENT_ANY_ID, mqtt_event_handler,
                                  NULL);
   esp_mqtt_client_start(client);
+}
+
+esp_err_t app_mqtt_publish(const char* topic, const char* data){ 
+  if(client == NULL)
+  {
+    //ESP_LOGI(TAG, "Event fail: %d", event->event_id);
+    return ESP_FAIL;
+  }
+  esp_mqtt_client_publish(client, topic, data,
+                                            strlen(data), 0, 0);
+  return ESP_OK;
+
 }

@@ -8,10 +8,11 @@
  * @copyright Copyright (c) 2021
  * 
  */
-
+#include "esp_err.h"
 #ifndef APP_MQTT_H_
 #define APP_MQTT_H_
 
-void mqtt_app_start(void);
+void app_mqtt_start(void);
+esp_err_t app_mqtt_publish(const char* topic, const char* data);
 
 #endif
