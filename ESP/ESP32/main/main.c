@@ -10,30 +10,14 @@
 #include "lwip/sys.h"
 #include "nvs_flash.h"
 #include "wifi_app.h"
+#include "peripherals.h"
 #include <string.h>
 
 #define BLINK_GPIO 15
 #define LOG_LOCAL_LEVEL ESP_LOG_VERBOSE
+int blink_gpio = BLINK_GPIO;
 
-BaseType_t xLedTaskHandle;
-TaskHandle_t xHandle = NULL;
 static const char *TAG = "MAIN";
-void ledTask(void *taskParams){
-  uint32_t cntr = 0;
-  uint16_t cntr2 = 0;
-  while(1){
-    vTaskDelay(cntr2/portTICK_PERIOD_MS);
-    if(cntr2 < 100){
-      cntr2++;
-    }
-    else{
-      cntr2 = 0;
-    }
-    gpio_set_level(BLINK_GPIO, cntr);
-    cntr = !cntr;
-  }
-
-}
 
 void app_main(void) {
 
@@ -46,13 +30,9 @@ void app_main(void) {
   gpio_reset_pin(BLINK_GPIO);
   gpio_set_direction(BLINK_GPIO, GPIO_MODE_OUTPUT);
   ESP_LOGI(TAG, "ESP_WIFI_MODE_AP");
-  wifi_init();
-  if(wifi_get_status() == CONNECTED){
-    app_mqtt_start();
-    xTaskCreate(ledTask, "LED task", 512, NULL, 13, xHandle );
-    if( xHandle != NULL )
-    {
-      vTaskDelete( xHandle );
-    }
+  wifiInit();
+  if(wifiGetStatus() == CONNECTED){
+    appMQTTStart();
+    initBuzzer(10);   
   }
 }

@@ -12,7 +12,7 @@
 #ifndef APP_MQTT_H_
 #define APP_MQTT_H_
 
-void app_mqtt_start(void);
-esp_err_t app_mqtt_publish(const char* topic, const char* data);
+void appMQTTStart(void);
+esp_err_t appMQTTPublish(const char* topic, const char* data);
 
 #endif

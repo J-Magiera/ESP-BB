@@ -16,6 +16,11 @@
 #include "freertos/event_groups.h"
 #include <string.h>
 #include "sdkconfig.h"
+
+
+
+#define WIFI_SSID "UPCCCEF2F2"
+#define WIFI_PASS "jzrd8fkWBpkh"
 #define MAXIMUM_RETRY 5
 #define WIFI_CONNECTED_BIT BIT0
 #define WIFI_FAIL_BIT BIT1
@@ -26,7 +31,7 @@ static int s_retry_num = 0;
 
 wifi_status_t wifi_status = DISCONNECTED;
 
-wifi_status_t wifi_get_status(void){
+wifi_status_t wifiGetStatus(void){
   return wifi_status;
 }
 
@@ -53,7 +58,7 @@ static void event_handler(void *arg, esp_event_base_t event_base,
   }
 }
 
-void wifi_init(void) {
+void wifiInit(void) {
   s_wifi_event_group = xEventGroupCreate();
 
   ESP_ERROR_CHECK(esp_netif_init());

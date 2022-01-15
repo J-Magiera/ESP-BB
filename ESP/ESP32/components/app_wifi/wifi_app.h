@@ -13,11 +13,13 @@
 
 
 typedef enum{
+    STARTED,
+    STOPPED,
     DISCONNECTED,
     CONNECTED
 }wifi_status_t;
 
-wifi_status_t wifi_get_status(void);
-void wifi_init(void);
+wifi_status_t wifiGetStatus(void);
+void wifiInit(void);
 
 #endif
