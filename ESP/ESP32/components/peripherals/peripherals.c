@@ -47,6 +47,6 @@ void initADC(void){
 
 const char* ADCRead(void){
     printf("ADC reads\n");
-    sprintf(txt, "%d", appADCRead());
+    sprintf(txt, "%u", appADCRead());
     return txt;
 }

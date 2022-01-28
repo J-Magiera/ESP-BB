@@ -17,14 +17,14 @@
 #define END_OF_LINE_BYTE_SET " \n"
 #define N_COMMANDS 3
 
-static const char* return_topic = "/topic/CLI/return";
+static const char* return_topic = "topic/2/CLI/return";
 static cmd_error_t cmd_info_callback(char*);
-static cmd_error_t cmd_buzzer_callback(char*);
+static cmd_error_t cmd_led_callback(char*);
 static cmd_error_t cmd_adc_callback(char*);
 
 static const cmd_t CLI[N_COMMANDS] = {
     {"info", &cmd_info_callback},
-    {"buzzer", &cmd_buzzer_callback},
+    {"led", &cmd_led_callback},
     {"adc", &cmd_adc_callback},
 };
 
@@ -75,7 +75,7 @@ static cmd_error_t cmd_info_callback(char* command){
     return CMD_OK;
 }
 
-static cmd_error_t cmd_buzzer_callback(char* command){
+static cmd_error_t cmd_led_callback(char* command){
     char* _cmd;
     _cmd = strtok(command, END_OF_LINE_BYTE_SET);
     printf("I'm here %s\n", _cmd);

@@ -11,9 +11,9 @@
 
 #ifndef APP_ADC_H_
 #define APP_ADC_H_
-
+#include <stdint.h>
 void appADCInit(void);
-int appADCRead(void);
+uint32_t appADCRead(void);
 
 
 #endif

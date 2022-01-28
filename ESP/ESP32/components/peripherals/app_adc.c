@@ -30,14 +30,12 @@ void appADCInit(void){
     esp_adc_cal_value_t val_type = esp_adc_cal_characterize(unit, atten, width, DEFAULT_VREF, adc_chars);
 }
 
-int appADCRead(void){
-    uint32_t adc_reading = 0;
+uint32_t appADCRead(void){
+    int adc_reading = 0;
     for(int i = 0; i < NO_OF_SAMPLES; i++){
         adc_reading += adc1_get_raw((adc1_channel_t)channel);
     }
     adc_reading /= NO_OF_SAMPLES;
-    printf("Raw reading: %u\n", adc_reading);
-    uint32_t voltage = esp_adc_cal_raw_to_voltage(adc_reading, adc_chars);
-    printf("Voltage: %u\n", voltage);
+    uint32_t voltage = esp_adc_cal_raw_to_voltage(adc1_get_raw((adc1_channel_t)channel), adc_chars);
     return voltage;
 }

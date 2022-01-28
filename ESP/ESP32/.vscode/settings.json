@@ -3,8 +3,10 @@
   "cmake.configureOnOpen": true,
   "idf.portWin": "COM3",
   "idf.adapterTargetName": "esp32",
+  "idf.flashType": "UART",
   "files.associations": {
     "esp_event.h": "c",
-    "*.inc": "c"
+    "*.inc": "c",
+    "gpio.h": "c"
   }
 }

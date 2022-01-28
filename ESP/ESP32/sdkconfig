@@ -126,12 +126,16 @@ CONFIG_PARTITION_TABLE_MD5=y
 # end of Partition Table
 
 #
-# Example Configuration
+# Configuration
 #
-CONFIG_ESP_WIFI_SSID="Aaa1"
-CONFIG_ESP_WIFI_PASSWORD="ntpy9589"
+CONFIG_ESP_WIFI_SSID="myssid"
+CONFIG_ESP_WIFI_PASS="mypassword"
 CONFIG_ESP_MAXIMUM_RETRY=5
-# end of Example Configuration
+CONFIG_MQTT_HOST_IP="192.168.0.10"
+CONFIG_MQTT_USERNAME="mqtt"
+CONFIG_MQTT_CLIENT_ID="esp32"
+CONFIG_MQTT_PASSWORD="password"
+# end of Configuration
 
 #
 # Compiler options
