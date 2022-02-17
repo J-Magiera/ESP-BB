@@ -1,4 +1,4 @@
-#Setup
+### Setup
 
 * Download Python 3.7 or newer
   ```sh
